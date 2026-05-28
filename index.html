@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="description"
-        content="Expressive Gaussian Human Avatars from Monocular RGB Video">
-  <meta name="keywords" content="Expressive, 3DGS, 3D Gaussian Splatting, Human Avatar">
+  <meta name="description" content="HumanNOVA: Photorealistic, Universal and Rapid 3D Human Avatar Modeling from a Single Image">
+  <meta name="keywords" content="HumanNOVA, 3D Human Reconstruction, Single Image, Photorealistic, Universal, Rapid ">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="icon" type="image/x-icon" href="/evahuman.github.io/media/pipeline/Figure1.png">
-  
-  <title>Expressive Gaussian Human Avatars from Monocular RGB Video</title>
-
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="./media/pipeline/Logo.png">
+  <title>HumanNOVA: Photorealistic, Universal and Rapid 3D Human Avatar Modeling from a Single Image</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -29,11 +23,6 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 
-  <!-- custom additional scripts -->
-
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- https://docs.mathjax.org/en/latest/web/configuration.html#configuration-using-an-in-line-script -->
   <script>
     MathJax = {
       tex: {
@@ -44,597 +33,1609 @@
       }
     };
   </script>
-  <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-  </script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-  <script
-  defer
-  src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"
-  ></script>
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css"
-  />
-
-  <!-- swiper -->
-  <!-- https://swiperjs.com/demos -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-
-  <link rel="image_src" href="./media/pipeline.png">
-  
-  <!-- img comparison slider -->
-  <!-- https://github.com/sneas/img-comparison-slider -->
   <style>
-    .before,
-    .after {
-      margin: 0;
-    }
-  
-    .before figcaption,
-    .after figcaption {
-      background: #fff;
-      border: 1px solid #c0c0c0;
-      border-radius: 4px;
-      color: #2e3452;
-      opacity: 0.8;
-      padding: 4px;
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      line-height: 70%;
-    }
-  
-    .before figcaption {
-      left: 4px;
-    }
-  
-    .after figcaption {
-      right: 4px;
-    }
-  </style>
+    /* =========================
+       HumanNOVA visual polish
+       ========================= */
 
-<style>
-  .button-container_teaser {
-      display: flex;       
-      justify-content: center; 
-      align-items: center;
-  }
+    html {
+      scroll-behavior: smooth;
+    }
 
-  .glow-button {
-      position: relative;
+    body {
+      font-family: 'Noto Sans', sans-serif;
+      background: #fafafa;
+      color: #242424;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, #ffffff 0%, #f7f8fb 100%);
+      border-bottom: 1px solid #eeeeee;
+    }
+
+    .hero-body {
+      padding-top: 2.5rem;
+      padding-bottom: 1.75rem;
+    }
+
+    .publication-title {
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      font-size: 2.65rem !important;
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 1.12;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero .container.is-max-desktop {
+      max-width: 1100px;
+    }
+
+    .publication-authors {
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      line-height: 1.65;
+    }
+
+    .publication-authors a {
+      color: hsl(204, 86%, 53%) !important;
+    }
+
+    .publication-authors a:hover {
+      text-decoration: underline;
+    }
+
+    .author-block {
       display: inline-block;
-      padding: 2px;
+      margin-right: 0.75rem;
+    }
+
+    .university-block {
+      display: inline-block;
+      margin-right: 1rem;
+      color: #555;
+    }
+
+    /* Venue badge */
+    .venue-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1.6rem;
+      margin-bottom: 1.2rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #fff7d6 0%, #ffe9a3 100%);
+      border: 1px solid rgba(208, 153, 20, 0.28);
+      color: #3b3322;
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(160, 120, 20, 0.08);
+    }
+
+    .venue-badge span {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #9a6500;
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    /* Buttons */
+    .publication-links {
+      margin-top: 0.35rem;
+    }
+
+    .link-block a.button {
+      margin: 0.25rem 0.25rem;
+      padding-left: 1.05rem;
+      padding-right: 1.05rem;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .link-block a.button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.16);
+    }
+
+    /* General section layout */
+    .section {
+      padding-top: 2.4rem;
+      padding-bottom: 2.4rem;
+    }
+
+    .section > .container.is-max-desktop {
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: 22px;
+      padding: 2rem;
+      box-shadow: 0 12px 36px rgba(30, 40, 70, 0.055);
+    }
+
+    .section .title.is-3,
+    #BibTeX .title {
+      font-family: 'Google Sans', 'Noto Sans', sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.35rem;
+    }
+
+    .content p {
+      font-size: 1.02rem;
+      line-height: 1.72;
+      color: #363636;
+    }
+
+    figure.image img,
+    .content img {
+      border-radius: 14px;
+    }
+
+    .section figure.image {
+      margin-bottom: 1rem;
+    }
+
+    .teaser-caption {
+      margin-top: 1.25rem;
+    }
+
+    /* Top qualitative results scroller */
+    .teaser-results {
+      margin-bottom: 2rem;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .teaser-results-controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 0.5rem;
+    }
+
+    .teaser-results-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.25rem;
+      height: 2.25rem;
+      border: 1px solid #e2e2e2;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #333333;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(30, 40, 70, 0.08);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    .teaser-results-toggle:hover,
+    .teaser-results-toggle:focus-visible {
+      background: #f7f8fb;
+      box-shadow: 0 8px 20px rgba(30, 40, 70, 0.12);
+      transform: translateY(-1px);
+    }
+
+    .teaser-results-viewport {
+      position: relative;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0.35rem 0 0.8rem;
+      cursor: grab;
+      scrollbar-width: thin;
+      scrollbar-color: #c9ccd3 transparent;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+    }
+
+    .teaser-results-viewport::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .teaser-results-viewport::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .teaser-results-viewport::-webkit-scrollbar-thumb {
+      background: #c9ccd3;
+      border-radius: 999px;
+    }
+
+    .teaser-results-viewport.is-dragging {
+      cursor: grabbing;
+      user-select: none;
+    }
+
+    .teaser-results-track {
+      display: flex;
+      width: max-content;
+      gap: 1rem;
+      animation: teaserResultsScroll 94s linear infinite;
+    }
+
+    .teaser-results.is-paused .teaser-results-track,
+    .teaser-results-viewport:hover .teaser-results-track,
+    .teaser-results-viewport:focus-within .teaser-results-track {
+      animation-play-state: paused;
+    }
+
+    .teaser-result-card {
+      flex: 0 0 500px;
+      padding: 0.85rem;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+      border: 1px solid #eeeeee;
+      box-shadow: 0 10px 24px rgba(30, 40, 70, 0.075);
+    }
+
+    .teaser-result-card .result-label {
+      font-size: 0.74rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .teaser-result-card .result-item img,
+    .teaser-result-card .result-item video {
+      aspect-ratio: 1 / 1.18;
       border-radius: 10px;
-      z-index: 0;
-      margin-bottom: 15px;
-  }
+    }
 
-  .glow-button button {
-      background: transparent; 
-      border: none; 
-      color: white; 
-      padding: 5px 10px; 
-      font-size: 16px; 
-      border-radius: 10px; 
-      cursor: pointer; 
-      outline: none; 
-  }
+    @keyframes teaserResultsScroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(calc(-50% - 0.5rem));
+      }
+    }
 
-  .glow-button:before {
-      content: "";
-      background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    @media (prefers-reduced-motion: reduce) {
+      .teaser-results-track {
+        animation: none;
+        overflow-x: auto;
+        width: auto;
+        padding-bottom: 0.5rem;
+      }
+    }
+
+    /* Video */
+    .publication-video {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      border-radius: 16px !important;
+      background: #000;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .publication-video iframe {
       position: absolute;
-      top: -2px;
-      left: -2px;
-      background-size: 400%;
-      z-index: -1;
-      filter: blur(5px);
-      -webkit-filter: blur(5px);
-      width: calc(100% + 4px);
-      height: calc(100% + 4px);
-      animation: glowing-button-85 20s linear infinite;
-      transition: opacity 0.3s ease-in-out;
-      border-radius: 10px;
-  }
-
-  @keyframes glowing-button-85 {
-      0% { background-position: 0 0; }
-      50% { background-position: 400% 0; }
-      100% { background-position: 0 0; }
-  }
-
-  .glow-button:after {
-      z-index: -1;
-      content: "";
-      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
+    }
+
+    /* Tabs */
+    .tabs.is-boxed ul {
+      border-bottom: none;
+      justify-content: center;
+    }
+
+    .tabs.is-boxed li a {
+      border-radius: 999px;
+      border: 1px solid #e6e6e6;
+      margin: 0 0.35rem;
+      padding: 0.55rem 1.25rem;
+      font-weight: 700;
+      color: #555;
+      transition: all 0.15s ease;
+    }
+
+    .tabs.is-boxed li.is-active a {
       background: #222;
-      left: 0;
-      top: 0;
-      border-radius: 10px;
-  }
-</style>
+      border-color: #222;
+      color: #fff;
+    }
 
-<style>
-  .container_teaser {
-      display: flex; /* Enables Flexbox */
-      justify-content: center; /* Horizontally centers the content */
-      align-items: center; /* Vertically centers the content */
-      height: 100%; /* Set the height of the container */
-  }
+    .tab-content {
+      display: none;
+    }
 
-  .column_teaser {
-      flex: 0 0 auto; /* This ensures that the column doesn't grow or shrink */
-      width: 100%; /* Adjust this width as needed */
-      max-width: 800px; /* Adjust this max-width as needed */
-      margin: 0 auto; /* Centers the column within the container */
-  }
-</style>
-  <script
-  defer
-  src="./static/js/image-comparison-slider.js"
-  ></script>
-  <link
-    rel="stylesheet"
-    href="./static/css/image-comparison-slider.css"
-  />
+    .tab-content.is-active {
+      display: block;
+      animation: fadeIn 0.22s ease-in;
+    }
 
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .tab-content img {
+      width: 100%;
+      border-radius: 14px;
+      box-shadow: 0 10px 28px rgba(40, 50, 80, 0.08);
+    }
+
+    /* Results section */
+    .result-card {
+      height: 100%;
+      padding: 0.85rem;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8f9fb 100%);
+      border: 1px solid #eeeeee;
+      box-shadow: 0 10px 28px rgba(30, 40, 70, 0.07);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(30, 40, 70, 0.12);
+    }
+
+    .result-pair {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .result-item {
+      width: 50%;
+      text-align: center;
+    }
+
+    .result-label {
+      display: inline-block;
+      margin-bottom: 0.45rem;
+      padding: 0.18rem 0.65rem;
+      border-radius: 999px;
+      background: #f0f1f4;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #333;
+    }
+
+    .result-item img,
+    .result-item video {
+      width: 100%;
+      aspect-ratio: 1 / 1.25;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #f4f4f4;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+
+    /* BibTeX */
+    #BibTeX pre {
+      border-radius: 14px;
+      background: #f6f7f9;
+      border: 1px solid #e8e8e8;
+      padding: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    .footer {
+      background: #f4f5f7;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid #e8e8e8;
+    }
+
+    .footer .icon-link {
+      font-size: 25px;
+      color: #000;
+      margin: 0 0.35rem;
+    }
+
+    /* Mobile */
+    @media screen and (max-width: 768px) {
+      .hero-body {
+        padding-top: 2.5rem;
+      }
+
+      .publication-title {
+        font-size: 2rem !important;
+      }
+
+      .venue-badge {
+        font-size: 1rem;
+        padding: 0.45rem 0.9rem;
+      }
+
+      .section {
+        padding-top: 1.3rem;
+        padding-bottom: 1.3rem;
+      }
+
+      .section > .container.is-max-desktop {
+        padding: 1.25rem;
+        border-radius: 16px;
+      }
+
+      .teaser-result-card {
+        flex-basis: 340px;
+      }
+
+      .result-pair {
+        gap: 0.55rem;
+      }
+
+      .result-label {
+        font-size: 0.75rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-</head>
-<body>
-
-
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">Expressive Gaussian Human Avatars from Monocular RGB Video</h1>
-            <style>
-              .author-block {
-                  margin-right: 10px;
-              }
-            </style>
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">
-                <a href="https://alexhu.top/">Hezhen Hu</a><sup>1</sup>,</span>
-              <span class="author-block">
-                <a href="https://zhiwenfan.github.io/">Zhiwen Fan</a><sup>1</sup>,</span>
-              <span class="author-block">
-                <a href="https://chikayan.github.io/">Tianhao Wu</a><sup>2</sup>,</span>
-              <span class="author-block">
-                <a href="">Yihan Xi</a><sup>1</sup>,</span>
-              <span class="author-block"> 
-                <a href="https://seoyoung1215.github.io/">Seoyoung Lee</a><sup>1</sup>,</span> <br>
-              <span class="author-block"> 
-                <a href="https://geopavlakos.github.io/">Georgios Pavlakos</a><sup>1</sup>,</span>
-              <span class="author-block">
-                <a href="https://www.ece.utexas.edu/people/faculty/atlas-wang">Zhangyang Wang</a><sup>1</sup>,</span>
-              </span>
-            </div>
-          <style>
-            .univerity-block {
-                margin-right: 14px;
-            }
-          </style>
-          <div class="is-size-5 publication-authors">
-            <span class="univerity-block"><sup>1</sup>University of Texas at Austin</span>
-            <span class="univerity-block"><sup>2</sup>Unveristy of Cambridge</span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="univerity-block" style="color: rgb(68, 68, 68);">NeurIPS 2024</span>
-          </div>
-        
-
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
           <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">
+              HumanNOVA: Photorealistic, Universal and Rapid <br>3D Human Avatar Modeling from a Single Image
+            </h1>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><a href="https://alexhu.top/">Hezhen Hu</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://wangbo-zhao.github.io/">Wangbo Zhao</a><sup>2</sup>,</span>
+              <span class="author-block"><a href="https://guolanqing.github.io/">Lanqing Guo</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://hwjiang1510.github.io/">Hanwen Jiang</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://jcliu979.github.io/">Jonathan C. Liu</a><sup>1</sup>,</span><br>
+              <span class="author-block"><a href="https://zhiwenfan.github.io/">Zhiwen Fan</a><sup>3</sup>,</span>
+              <span class="author-block"><a href="https://kaiwang960112.github.io/">Kai Wang</a><sup>2</sup>,</span>
+              <span class="author-block"><a href="https://www.ece.utexas.edu/people/faculty/atlas-wang">Zhangyang Wang</a><sup>1</sup>,</span>
+              <span class="author-block"><a href="https://geopavlakos.github.io/">Georgios Pavlakos</a><sup>1</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="university-block"><sup>1</sup>University of Texas at Austin</span>
+              <span class="university-block"><sup>2</sup>National University of Singapore</span>
+              <span class="university-block"><sup>3</sup>Texas A&amp;M University</span>
+            </div>
+
+            <div class="venue-badge">
+              ✨ CVPR 2026 <span>Highlight</span>
+            </div>
+
             <div class="publication-links">
-              <!-- PDF Link. -->
               <span class="link-block">
-                <a href="https://arxiv.org/abs/2407.03204"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
+                <a href="https://arxiv.org/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
                   <span>Paper</span>
                 </a>
               </span>
-              <!-- Video Link.
+
               <span class="link-block">
-                <a href="https://www.youtube.com/"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-youtube"></i>
-                  </span>
+                <a href="https://www.youtube.com/watch?v=pslYhxFiALE" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
                   <span>Video</span>
                 </a>
-              </span> -->
-              <!-- Code Link. -->
+              </span>
+
               <span class="link-block">
-                <a href="https://github.com/evahuman/EVA_Official"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
+                <a href="https://github.com/" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
                   <span>Code</span>
-                  </a>
+                </a>
               </span>
             </div>
-
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <figure class="image is-centered" style="width: 100%;">
-          <img src="./media/pipeline/Figure0.jpg" alt="Pipeline Image">
-        </figure>
-      </div>
-    </div>
-    <div class="content has-text-justified">
-      <p>
-        Overview of the proposed EVA framework. 
-        Given a real-world monocular RGB video, EVA first prepares well-aligned SMPL-X mesh via a plug-and-play module. 
-        Then EVA utilizes 3D Gaussians Splatting to perform avatar modeling, with the prior incorporated from the SMPL-X model. <br> <br>
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-full">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Nuanced expressiveness, particularly through fine-grained hand and facial expressions, is pivotal for enhancing the realism and vitality of digital human representations.
-            In this work, we focus on investigating the expressiveness of human avatars when learned from monocular RGB video; a setting that introduces new challenges in capturing and animating fine-grained details.
-            To this end, we introduce EVA, a drivable human model that meticulously sculpts fine details based on 3D Gaussians and SMPL-X, an expressive parametric human model.
-            Focused on enhancing expressiveness, our work makes three key contributions.
-            First, we highlight the critical importance of aligning the SMPL-X model with RGB frames for effective avatar learning.
-            Recognizing the limitations of current SMPL-X prediction methods for in-the-wild videos, we introduce a plug-and-play module that significantly ameliorates misalignment issues.
-            Second, we propose a context-aware adaptive density control strategy, which is adaptively adjusting the gradient thresholds to accommodate the varied granularity across body parts.
-            Last but not least, we develop a feedback mechanism that predicts per-pixel confidence to better guide the learning of 3D Gaussians.
-            Extensive experiments on two benchmarks demonstrate the superiority of our framework both quantitatively and qualitatively, especially on the fine-grained hand and facial details.
-          </p>
-          
-        </div>
-      </div>
-    </div>
-    <!--/ Abstract. -->
-
-  </div>
-</section>
-
-
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Approach</h2>
-    <div class="content has-text-justified">
-      <div class="columns is-centered">
-        <figure class="image is-centered">
-          <img src="./media/pipeline/Figure1.jpg" alt="Pipeline Image">
-        </figure>
-      </div>
-      <p>
-        Overview of the proposed EVA framework. 
-        Given a real-world monocular RGB video, EVA first prepares well-aligned SMPL-X mesh via a plug-and-play module. 
-        Then EVA utilizes 3D Gaussians Splatting to perform avatar modeling, with the prior incorporated from the SMPL-X model. <br> <br>
-      </p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <h3 class="title is-3">Qualitative Comparison</h3>
-    <div class="content has-text-justified">
-    <p>
-      Comparison with one of the SOTA method (GART). The first two rows correpond to the avatars learned from in-the-wild video, while the last row shows the avatar learned from well-annotated controlled dataset. <br> 
-    </p>
-    </div>
-  <div class="container is-max-desktop">
-    <div class="columns is-centered is-multiline">
-
-      <div class="column is-half">
-        <div>
-          <img-comparison-slider>
-            <figure slot="first" class="before">
-              <img width="100%" src="./media/final/00010_1.png">
-            </figure>
-            <figure slot="second" class="after">
-              <img width="100%" src="./media/final/00010_3.png">
-          </img-comparison-slider>
-        </div>
-      </div>
-      
-      <div class="column is-half">
-        <div>
-          <img-comparison-slider>
-            <figure slot="first" class="before">
-              <img width="100%" src="./media/final/00111_1.png">
-            </figure>
-            <figure slot="second" class="after">
-              <img width="100%" src="./media/final/00111_3.png">
-          </img-comparison-slider>
-        </div>
-      </div>
-      
-      <div class="column is-half">
-        <div>
-          <img-comparison-slider>
-            <figure slot="first" class="before">
-              <img width="100%" src="./media/final/00004_1.png">
-            </figure>
-            <figure slot="second" class="after">
-              <img width="100%" src="./media/final/00004_3.png">
-          </img-comparison-slider>
-        </div>
-      </div>
-
-      <div class="column is-half">
-        <div>
-          <img-comparison-slider>
-            <figure slot="first" class="before">
-              <img width="100%" src="./media/final/00013_1.png">
-            </figure>
-            <figure slot="second" class="after">
-              <img width="100%" src="./media/final/00013_3.png">
-          </img-comparison-slider>
-        </div>
-      </div>
-
-      <div class="column is-half">
-        <div>
-          <img-comparison-slider>
-            <figure slot="first" class="before">
-              <img width="100%" src="./media/final/00065_1.png">
-            </figure>
-            <figure slot="second" class="after">
-              <img width="100%" src="./media/final/00065_3.png">
-          </img-comparison-slider>
-        </div>
-      </div>
-
-      <div class="column is-half">
-        <div>
-          <img-comparison-slider>
-            <figure slot="first" class="before">
-              <img width="100%" src="./media/final/00152_1.png">
-            </figure>
-            <figure slot="second" class="after">
-              <img width="100%" src="./media/final/00152_3.png">
-          </img-comparison-slider>
-        </div>
-      </div>
-
-    <style>
-      .before,
-      .after {
-        margin: 0;
-      }
-    
-      .before figcaption,
-      .after figcaption {
-        background: #fff;
-        border: 1px solid #c0c0c0;
-        border-radius: 4px;
-        color: #2e3452;
-        opacity: 0.8;
-        padding: 4px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        line-height: 100%;
-      }
-    
-      .before figcaption {
-        left: 4px;
-      }
-    
-      .after figcaption {
-        right: 4px;
-      }
-    </style>
-  </div>
-</section>
-
-
-<section class="section">
+  <section class="section">
     <div class="container is-max-desktop">
-    <h3 class="title is-3">Applications</h3>
-    <div class="content has-text-justified">
-    </div>
-    
-    <h3 class="title is-4">Novel view synthesis</h3>
-    <div class="columns is-centered">
-      <div class="column">
-        <div class="content">
-          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-            <source src="./media/novel_view/00035_69.mp4"
-            type="video/mp4">
-          </video>
+      <div class="teaser-results">
+        <div class="teaser-results-controls">
+          <button class="teaser-results-toggle" type="button" aria-label="Pause qualitative results" aria-pressed="false">
+            <i class="fas fa-pause" aria-hidden="true"></i>
+          </button>
         </div>
-      </div>
+        <div class="teaser-results-viewport" aria-label="Scrolling qualitative results">
+          <div class="teaser-results-track">
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/1.png" alt="Input image 1">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/1.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
 
-      <div class="column">
-        <div class="content">
-          <video id="matting-video" autoplay controls muted loop playsinline width="100%">
-            <source src="./media/novel_view/00086_139.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/2.png" alt="Input image 2">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/2.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
 
-      <div class="column">
-        <div class="content">
-          <video id="matting-video" autoplay controls muted loop playsinline width="100%">
-            <source src="./media/novel_view/00088_97.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/3.png" alt="Input image 3">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/3.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
 
-      <h3 class="title is-4">Novel pose synthesis</h3>
-      <div class="columns is-centered">
-        <div class="column">
-          <div class="content">
-            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-              <source src="./media/novel_pose/00035.mp4"
-              type="video/mp4">
-            </video>
-          </div>
-        </div>
-  
-        <div class="column">
-          <div class="columns is-centered">
-            <div class="column content">
-              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
-                <source src="./media/novel_pose/00086.mp4"
-                type="video/mp4">
-              </video>
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/4.png" alt="Input image 4">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/4.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/5.png" alt="Input image 5">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/5.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/6.png" alt="Input image 6">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/6.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/7.png" alt="Input image 7">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/7.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/8.png" alt="Input image 8">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/8.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/9.png" alt="Input image 9">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/9.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/10.png" alt="Input image 10">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/10.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/11.png" alt="Input image 11">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/11.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/12.png" alt="Input image 12">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/12.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/13.png" alt="Input image 13">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/13.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/14.png" alt="Input image 14">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/14.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/15.png" alt="Input image 15">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/15.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/16.png" alt="Input image 16">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/16.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/17.png" alt="Input image 17">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/17.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/18.png" alt="Input image 18">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/18.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/1.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/1.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/2.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/2.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/3.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/3.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/4.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/4.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/5.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/5.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/6.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/6.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/7.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/7.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/8.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/8.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/9.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/9.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/10.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/10.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/11.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/11.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/12.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/12.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/13.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/13.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/14.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/14.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/15.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/15.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/16.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/16.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/17.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/17.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+
+            <div class="teaser-result-card" aria-hidden="true">
+              <div class="result-pair">
+                <div class="result-item">
+                  <p class="result-label">Input</p>
+                  <img src="./media/results/18.png" alt="">
+                </div>
+                <div class="result-item">
+                  <p class="result-label">Our Result</p>
+                  <video autoplay muted loop playsinline>
+                    <source src="./media/results/18.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-  
-        <div class="column">
-          <div class="columns is-centered">
-            <div class="column content">
-              <video id="matting-video" autoplay controls muted loop playsinline height="100%">
-                <source src="./media/novel_pose/00088.mp4"
-                type="video/mp4">
-              </video>
-            </div>
-          </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section teaser-figure-section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Overview</h2>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <figure class="image is-centered" style="width: 100%;">
+            <img src="./media/pipeline/Teaser.png" alt="HumanNOVA teaser figure">
+          </figure>
         </div>
       </div>
 
-
-      <h3 class="title is-4">Novel pose synthesis</h3>
+      <div class="content has-text-justified teaser-caption">
         <p>
-          Driven by unseen in-the-wild SMPLX sequence from unseen identity.
+          <strong>Photorealistic, universal and rapid 3D human avatar modeling from a single image by the proposed approach, HumanNOVA.</strong>
+          It benefits from both our generated large-scale data and feed-forward model design. Our data generation pipeline expands training data by 20 times, as visualized in the top-left.
+          With this data, HumanNOVA achieves superior performance while maintaining <em>rapid</em> inference among existing methods, as shown in the top-right. Once trained, it is <em>universal</em> without the need for test-time fine-tuning or adaptation.
+          Qualitative results show that HumanNOVA produces more precise <em>photorealistic</em> reconstructions compared to the state-of-the-art SiTH method, as shown at the bottom.
         </p>
-      <div class="columns is-centered">
-        <div class="column">
-          <div class="content">
-            <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">
-              <source src="./media/real_world/co_animate.mp4"
-              type="video/mp4">
-            </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              In this paper, we present HumanNOVA, a photorealistic, universal, and rapid model for generating 3D human avatars from a single RGB image.
+              Achieving both photorealism and generalization is challenging due to the scarcity of diverse, high-quality 3D human data.
+              To address this, we build a scalable data generation pipeline that follows two strategies.
+              The first one is to leverage existing rigged assets and animate them with extensive poses from daily life.
+              The second strategy is to utilize existing multi-camera captures of humans and employ fitting to generate more diverse views for training.
+              These two strategies enable us to scale up to 100k assets, significantly enhancing both the quantity and the diversity of data for robust model training.
+              In terms of the architecture, HumanNOVA adopts a feed-forward, token-conditioned avatar modeling framework that allows fast inference in less than one second and requires no test-time optimization.
+              Given an input image and an estimated simplified human mesh (SMPL) without detailed geometry or appearance, the model first encodes both inputs into compact token representations.
+              These tokens then act as conditioning signals and are fused through cross-attention to construct a triplane-based 3D avatar representation.
+              Extensive experiments on multiple benchmarks demonstrate the superiority of our approach, both quantitatively and qualitatively, as well as its robustness under diverse input image conditions.
+            </p>
           </div>
         </div>
-  
-        </div>
-      
-
-    <style>
-      .before,
-      .after {
-        margin: 0;
-      }
-    
-      .before figcaption,
-      .after figcaption {
-        background: #fff;
-        border: 1px solid #c0c0c0;
-        border-radius: 4px;
-        color: #2e3452;
-        opacity: 0.8;
-        padding: 4px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        line-height: 100%;
-      }
-    
-      .before figcaption {
-        left: 4px;
-      }
-    
-      .after figcaption {
-        right: 4px;
-      }
-    </style>
-  </div>
-</section>
-
-
-
-
-
-
-  </div>
-</section>
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@inproceedings{hu2024expressive,
-  author    = {Hu, Hezhen and Fan, Zhiwen and Wu, Tianhao and Xi, Yihan and Lee, Seoyoung and Pavlakos, Georgios and Wang, Zhangyang},
-  title     = {Expressive Gaussian Human Avatars from Monocular RGB Video},
-  booktitle   = {NeurIPS},
-  year      = {2024},
-}</code></pre>
-  </div>
-</section>
-
-
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
+      </div>
     </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Video</h2>
+          <div class="publication-video">
+            <iframe
+              src="https://www.youtube.com/embed/pslYhxFiALE"
+              title="HumanNOVA Video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Approach</h2>
+
+      <div class="tabs is-centered is-boxed">
+        <ul>
+          <li class="is-active" data-tab="data-tab"><a>Data</a></li>
+          <li data-tab="model-tab"><a>Model</a></li>
+        </ul>
+      </div>
+
+      <div id="data-tab" class="tab-content is-active">
+        <div class="content has-text-justified">
+          <div class="columns is-centered">
+            <figure class="image is-centered">
+              <img src="./media/pipeline/Data.png" alt="HumanNOVA data generation pipeline">
+            </figure>
+          </div>
           <p>
-            Source code borrowed from <a
-              href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            <strong>Data generation pipeline.</strong>
+            HumanNOVA builds a scalable data generation pipeline to expand the diversity and quantity of training data.
+            We leverage both existing rigged human assets animated with diverse daily poses and multi-camera human captures fitted to generate diverse training views.
+            This enables large-scale training with diverse identities, poses, appearances, and viewpoints.
+          </p>
+        </div>
+      </div>
+
+      <div id="model-tab" class="tab-content">
+        <div class="content has-text-justified">
+          <div class="columns is-centered">
+            <figure class="image is-centered">
+              <img src="./media/pipeline/Framework.png" alt="HumanNOVA model framework">
+            </figure>
+          </div>
+          <p>
+            <strong>Model architecture.</strong>
+            Given a real-world input image, we first estimate its corresponding simplified human mesh.
+            Image and mesh are fed into the multi-modal encoder to extract features, which are utilized as the condition for the following mapping network.
+            After that, a Transformer-based mapping network directly maps the features to the 3D triplane representation.
+            From this triplane representation, our framework can render the 2D image given a camera viewpoint.
           </p>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </section>
 
-<script>
-  function toggleSliders() {
-      // Get both slider containers
-      var slider1 = document.getElementById("slider1-container_teaser");
-      var slider2 = document.getElementById("slider2-container_teaser");
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Qualitative Results</h2>
 
-      // Toggle visibility
-      if (slider1.style.display === "none") {
-          slider1.style.display = "block";
-          slider2.style.display = "none";
-      } else {
-          slider1.style.display = "none";
-          slider2.style.display = "block";
+      <div class="columns is-multiline is-centered">
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/1.png" alt="Input image 1">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/1.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/2.png" alt="Input image 2">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/2.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/3.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/3.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/4.png" alt="Input image 4">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/4.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/5.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/5.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/6.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/6.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/7.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/7.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/8.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/8.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/9.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/9.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/10.png" alt="Input image 3">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/10.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/11.png" alt="Input image 11">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/11.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/12.png" alt="Input image 12">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/12.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/13.png" alt="Input image 13">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/13.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/14.png" alt="Input image 14">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/14.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/15.png" alt="Input image 15">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/15.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/16.png" alt="Input image 16">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/16.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/17.png" alt="Input image 17">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/17.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="result-card">
+            <div class="result-pair">
+              <div class="result-item">
+                <p class="result-label">Input</p>
+                <img src="./media/results/18.png" alt="Input image 18">
+              </div>
+              <div class="result-item">
+                <p class="result-label">Our Result</p>
+                <video autoplay muted loop playsinline>
+                  <source src="./media/results/18.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <div class="bibtex-header">
+        <h2 class="title">BibTeX</h2>
+        <button class="copy-bibtex-button" type="button" data-copy-target="humannova-bibtex" aria-label="Copy BibTeX">
+          <i class="far fa-copy"></i>
+          <span>Copy</span>
+        </button>
+      </div>
+      <pre><code id="humannova-bibtex">@inproceedings{hu2026humannova,
+  author    = {Hu, Hezhen and Zhao, Wangbo and Guo, Lanqing and Jiang, Hanwen and Liu, Jonathan C. and Fan, Zhiwen and Wang, Kai and Wang, Zhangyang and Pavlakos, Georgios},
+  title     = {{HumanNOVA}: Photorealistic, Universal and Rapid 3D Human Avatar Modeling from a Single Image},
+  booktitle = {CVPR},
+  year      = {2026},
+}</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a class="icon-link" href="https://arxiv.org/" aria-label="Paper">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/" aria-label="Code">
+          <i class="fab fa-github"></i>
+        </a>
+      </div>
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              Source code borrowed from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const tabs = document.querySelectorAll(".tabs li");
+      const contents = document.querySelectorAll(".tab-content");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          const target = tab.getAttribute("data-tab");
+
+          tabs.forEach((item) => item.classList.remove("is-active"));
+          tab.classList.add("is-active");
+
+          contents.forEach((content) => {
+            content.classList.remove("is-active");
+          });
+
+          document.getElementById(target).classList.add("is-active");
+        });
+      });
+
+      const teaserResults = document.querySelector(".teaser-results");
+      const teaserViewport = document.querySelector(".teaser-results-viewport");
+      const teaserToggle = document.querySelector(".teaser-results-toggle");
+
+      if (teaserResults && teaserViewport && teaserToggle) {
+        let isDragging = false;
+        let startX = 0;
+        let startScrollLeft = 0;
+
+        const setPaused = (paused) => {
+          teaserResults.classList.toggle("is-paused", paused);
+          teaserToggle.setAttribute("aria-pressed", paused ? "true" : "false");
+          teaserToggle.setAttribute("aria-label", paused ? "Play qualitative results" : "Pause qualitative results");
+          teaserToggle.innerHTML = paused
+            ? '<i class="fas fa-play" aria-hidden="true"></i>'
+            : '<i class="fas fa-pause" aria-hidden="true"></i>';
+        };
+
+        teaserToggle.addEventListener("click", () => {
+          setPaused(!teaserResults.classList.contains("is-paused"));
+        });
+
+        teaserViewport.addEventListener("wheel", () => {
+          setPaused(true);
+        }, { passive: true });
+
+        teaserViewport.addEventListener("pointerdown", (event) => {
+          setPaused(true);
+          isDragging = true;
+          startX = event.clientX;
+          startScrollLeft = teaserViewport.scrollLeft;
+          teaserViewport.classList.add("is-dragging");
+          teaserViewport.setPointerCapture(event.pointerId);
+        });
+
+        teaserViewport.addEventListener("pointermove", (event) => {
+          if (!isDragging) {
+            return;
+          }
+
+          teaserViewport.scrollLeft = startScrollLeft - (event.clientX - startX);
+        });
+
+        const stopDragging = () => {
+          isDragging = false;
+          teaserViewport.classList.remove("is-dragging");
+        };
+
+        teaserViewport.addEventListener("pointerup", stopDragging);
+        teaserViewport.addEventListener("pointercancel", stopDragging);
+        teaserViewport.addEventListener("mouseleave", stopDragging);
       }
-  }
-</script>
-
+    });
+  </script>
 </body>
 </html>
